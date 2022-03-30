@@ -7,5 +7,9 @@ Lab_2:
     Input transition table and make a dfa.
     Then check string
     
-Lab_2:
+Lab_3:
     NFA to DFA converter code in C++
+
+Lab_4:
+    contex free grammer
+  
