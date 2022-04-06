@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
-#include<string.h>
 using namespace std;
 
+int size;
 string grammer[] = {"E+E","E*E","(E)"};
 
 int strlength(string str)
@@ -18,55 +18,48 @@ int strlength(string str)
 
 
 
-bool check(string a)
+bool check(string a, int k)
 {
-    for(int i=0;i<3;i++){
-        if(grammer[i] == a){
+    for(int j=0;j<3;j++){
+        if((grammer[j][0] == a[k])  &&  (grammer[j][1] == a[k+1])  &&  (grammer[j][2] == a[k+2]))
             return true;
-        }
     }
-
     return false;
 }
 
 
+
 int main()
 {
-   string str,temp;
-    //getline(cin,str);
+    string str,temp;
+    cout<<"Input string: ";
     cin>>str;
+    size = str.size();
 
-    //replace number by E
+    //replace two data by 1
     for(int i=0;i<strlength(str);i++){
-         if(str[i] == '0' || str[i] == '1'){
+        if(str[i] == '0' || str[i] == '1'){
             str[i] = 'E';
-         }
+        }
     }
 
-
-    while(1){
-        //make a temp array
-        for(int k=0;k<strlength(str)-2;k++){
-            int p =0;
-            for(int i=k;i<k+3;i++){
-                temp[p++] = str[k];
-            }
-            temp[p] = '\0';
-
-            if(check(temp)){        //found match then replace
+    
+    int counter=0;
+    while(counter++<20){
+        
+        for(int k=0;k<str.size()-2;k++){
+    
+            if(check(str,k)){        //found match then replace
                 str[k] = 'E';
-
-                for(int x=k+3;x<strlength(str);x++){
+                for(int x=k+3;x<=str.size();x++){
                     str[++k] = str[x];
                 }
-                str[k] = '\0';
+                str[++k] = '\0';
                 break;
             }
         }
 
-
-
-        if(str == "E"){
+        if(strlength(str) == 1){
             cout<<"String accepted";
             break;
         }
@@ -74,8 +67,10 @@ int main()
             cout<<"String not accepted";
             break;
         }
-
     }
-
+	
+    if(counter == 21){
+	cout<<"string not acceopted"<<endl;
+     }
 
 }
