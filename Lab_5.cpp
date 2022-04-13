@@ -1,97 +1,87 @@
 #include<bits/stdc++.h>
+#include<string.h>
 using namespace std;
+#define SIZE 100
 
-char stk[100],top=0;
-bool accepted = false;
-string str;
-int SIZE;
+char stk[100];
+int top;
+bool accepted = false,first = true;
 
-void printStack()
+void print_stack()
 {
-    for(int i=0;i<top;i++)
-    {
-        cout<<i<<"***";
+    for(int i=0;i<top;i++){
         cout<<stk[i];
     }
     cout<<"Z";
 }
 
 
-void printState(int temp)
+void control_stack(char str[], int temp)
 {
-    for(int i=0;i<temp;i++)
-    {
-        cout<<i<<temp<<"***";
-        cout<<"q0,"<<str[i]<<", ";
-        printStack();
+    top = 0;
+    for(int i=0;i<temp;i++){
+        cout<<"q0,push-"<<str[i]<<",";
+        print_stack();
 
-        str[top++] = str[i];
-        cout<<" ->  q0,";
-        printStack();
+        stk[top++] = str[i];
+        cout<<" -> q0,";
+        print_stack();
         cout<<endl;
-        if(i>30)
-           break;
     }
 
-    cout<<" String arte "<<str<<endl;
-    for(int i=temp;i<str.size();i++)
-    {
-        cout<<i<<str.size()<<"***";
-        if(i == temp){
-            cout<<"q0,"<<str[i]<<", ";
-        }
-        else{
-            cout<<"q1,"<<str[i]<<", ";
-        }
-        printStack();
-
-        top--;              //pop element
-        cout<<" ->  q1,";
-        printStack();
+    while(top){
+         if(first){
+            cout<<"q0, pop-"<<stk[--top]<<" -> ";
+            first = false;
+         }
+         else{
+            cout<<"q1, pop-"<<stk[--top]<<" -> ";
+         }
+        cout<<"q1,";
+        print_stack();
         cout<<endl;
-
-        if(i>30)
-           break;
     }
 
+    cout<<"q1, eps -> q2, Z"<<endl;
 }
 
-void search()
+
+void search(char str[])
 {
     int i,j,temp;
-    for(i=0;i<str.size();i++){
+    for(i=0;i<strlen(str);i++){
         top = -1;
         for(j=0;j<i;j++){
             stk[++top] = str[i];
         }
         temp = j;
-        for( ;j<str.size();j++){
+        for( ;j<strlen(str);j++){
             if(str[top--] != str[j]){
                 break;
             }
         }
 
-        if(top == -1 && j == str.size()){
-            //printState(temp);
+        if(top == -1 && j == strlen(str)){
             accepted = true;
+            control_stack(str,temp);
             break;
         }
     }
 
     if(accepted){
-        cout<<"String accepted\n";
+        cout<<"\nString accepted\n";
     }
     else{
-        cout<<"String not accepted";
+        cout<<"\nString not accepted";
     }
 }
 
 
 int main()
 {
+    char str[SIZE];
     cout<<"Input string ";
     cin>>str;
-    SIZE = str.size();
 
-    search();
+    search(str);
 }
