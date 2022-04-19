@@ -74,8 +74,19 @@ void create_table()
         cout<<endl;
     }
 
+    bool accepted = false;
+    for(i=0;i<table[1][str.size()].size();i++){
+        if(table[1][str.size()][i] == 'S'){
+            accepted = true;
+        }
+    }
 
-
+    if(accepted){
+        cout<<"String Accepted"<<endl;
+    }
+    else{
+        cout<<"String Not Accepted"<<endl;
+    }
 
 }
 
