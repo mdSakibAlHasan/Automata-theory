@@ -116,10 +116,6 @@ int main()
 
     }
 
-    for(int i=0;i<line;i++){
-        cout<<grammer[i][0]<<" two "<<grammer[i][1]<<" two "<<terminal[i]<<endl;
-    }
-
     cout<<"Input string: ";
     cin>>str;
 
